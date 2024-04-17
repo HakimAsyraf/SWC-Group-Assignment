@@ -1,0 +1,62 @@
+//preprocessor directives
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <limits>
+using namespace std;
+
+// Define maximum number of transactions
+const int MAX_TRANSACTIONS = 70;// Adjust as needed
+
+// Define maximum number of items/transaction
+const int MAX_ITEMS_PER_TRANSACTION = 5; // Adjust as needed
+
+// Define the structure to store each item in a transaction
+struct TransactionItem {
+    string cookieType;
+    int quantitySold;
+    double pricePerUnit;
+};
+
+// DECLARATION of arrays to store sales data
+string transactionNo[MAX_TRANSACTIONS];
+string customerName[MAX_TRANSACTIONS];
+TransactionItem items[MAX_TRANSACTIONS][MAX_ITEMS_PER_TRANSACTION];
+int itemsCount[MAX_TRANSACTIONS] = {0}; // Track the number of items in each transaction
+
+// Define the structure to represent a transaction
+struct Transaction {
+    string transactionNo;
+    string customerName;
+    TransactionItem items[MAX_ITEMS_PER_TRANSACTION];
+    int itemCount; // Track the number of items in the transaction
+    double totalRevenue; // Total revenue for the transaction
+};
+
+// Array to store all transactions
+Transaction transactions[MAX_TRANSACTIONS];
+
+
+// Function to display cookie types and their corresponding numbers
+void displayCookieTypes() {
+    cout << setfill('-') << setw(70) << "" << endl;
+    cout << setfill('*') << setw(70 / 2 + 4) << "Cookie Type" << setw(70 / 2 - 4) << "" << endl;
+    cout << setfill('-') << setw(70) << "" << endl;
+    cout << "|   1    | " << setfill('*') << setw(50 / 2 + 4) << " Coklat chip " << setw(50 / 2 - 4) << "| RM 6.50 |" << endl;
+    cout << setfill('-') << setw(70) << "" << endl;
+    cout << "|   2    | " << setfill('*') << setw(50 / 2 + 4) << " Walnut " << setw(50 / 2 - 4) << "| RM 8.50 |" << endl;
+    cout << setfill('-') << setw(70) << "" << endl;
+    cout << "|   3    | " << setfill('*') << setw(50 / 2 + 4) << " Almond " << setw(50 / 2 - 4) << "| RM 7.50 |" << endl;
+    cout << setfill('-') << setw(70) << "" << endl;
+    cout << "|   4    | " << setfill('*') << setw(50 / 2 + 4) << " Oat " << setw(50 / 2 - 4) << "| RM 7.50 |" << endl;
+    cout << setfill('-') << setw(70) << "" << endl;
+    cout << "|   5    | " << setfill('*') << setw(50 / 2 + 4) << " White chocolate " << setw(50 / 2 - 4) << "| RM 6.50 |" << endl;
+    cout << setfill('-') << setw(70) << "" << endl;
+    cout << "|   6    | " << setfill('*') << setw(50 / 2 + 4) << " Peanut butter " << setw(50 / 2 - 4) << "| RM 8.50 |" << endl;
+    cout << setfill('-') << setw(70) << "" << endl;
+    cout << "|   7    | " << setfill('*') << setw(50 / 2 + 4) << " Nutella " << setw(50 / 2 - 4) << "| RM 8.50 |" << endl;
+   cout << setfill('-') << setw(70) << "" << endl;
+
+    // Fill the width with '=' symbols using setw and setfill
+    cout << std::setw(42) << std::setfill('=') << "=" << std::endl;
+}
