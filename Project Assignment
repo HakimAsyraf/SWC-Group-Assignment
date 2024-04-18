@@ -60,3 +60,95 @@ void displayCookieTypes() {
     // Fill the width with '=' symbols using setw and setfill
     cout << std::setw(42) << std::setfill('=') << "=" << std::endl;
 }
+
+// Function to record sales
+void recordSales() {
+    // Find the first available index in the transactions array
+    int i = 0;
+    while (i < MAX_TRANSACTIONS && !transactions[i].transactionNo.empty()) {
+        i++;
+    }
+
+    if (i == MAX_TRANSACTIONS) {
+        cout << "\nMaximum number of transactions reached. Unable to record new sales.\n" << endl;
+        return;
+    }
+
+    // Record transaction number
+    transactions[i].transactionNo = "T" + to_string(i + 1);
+
+    // Prompt for customer name
+    cout << "\nCustomer Name: ";
+    cin >> transactions[i].customerName;
+
+    transactions[i].itemCount = 0; // Initialize item count for this transaction
+    transactions[i].totalRevenue = 0.0; // Initialize total revenue for this transaction
+
+    // Prompt for items until the user is done
+    char choice;
+    do {
+        displayCookieTypes(); // Display available cookie types
+        int cookieChoice;
+        cout << "\nSelect Cookie Type (Enter number 1-7): ";
+        while (!(cin >> cookieChoice) || cookieChoice < 1 || cookieChoice > 7) {
+            cout << "\nInvalid choice. Please select a number between 1 and 7.\n" << endl;
+            cin.clear(); // Clear error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
+        }
+
+        cout << "\nQuantity Sold for Cookie Type " << cookieChoice << ": ";
+        int quantity;
+        while (!(cin >> quantity) || quantity <= 0) {
+            cout << "\nInvalid quantity. Please enter a positive number.\n" << endl;
+            cin.clear(); // Clear error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
+        }
+
+        // Record the item for the selected cookie type and quantity
+        switch (cookieChoice) {
+            case 1:
+                transactions[i].items[transactions[i].itemCount].cookieType = "Coklat chip";
+                transactions[i].items[transactions[i].itemCount].pricePerUnit = 6.50;
+                break;
+            case 2:
+                transactions[i].items[transactions[i].itemCount].cookieType = "Walnut";
+                transactions[i].items[transactions[i].itemCount].pricePerUnit = 8.50;
+                break;
+            case 3:
+                transactions[i].items[transactions[i].itemCount].cookieType = "Almond";
+                transactions[i].items[transactions[i].itemCount].pricePerUnit = 7.50;
+                break;
+            case 4:
+                transactions[i].items[transactions[i].itemCount].cookieType = "Oat";
+                transactions[i].items[transactions[i].itemCount].pricePerUnit = 7.50;
+                break;
+            case 5:
+                transactions[i].items[transactions[i].itemCount].cookieType = "White chocolate";
+                transactions[i].items[transactions[i].itemCount].pricePerUnit = 6.50;
+                break;
+            case 6:
+                transactions[i].items[transactions[i].itemCount].cookieType = "Peanut butter";
+                transactions[i].items[transactions[i].itemCount].pricePerUnit = 8.50;
+                break;
+            case 7:
+                transactions[i].items[transactions[i].itemCount].cookieType = "Nutella";
+                transactions[i].items[transactions[i].itemCount].pricePerUnit = 8.50;
+                break;
+            default:
+                cout << "\nInvalid choice. Item not recorded.\n" << endl;
+                continue; // Skip the rest of the loop and start again
+        }
+
+        transactions[i].items[transactions[i].itemCount].quantitySold = quantity;
+        transactions[i].itemCount++; // Increment item count for this transaction
+
+        cout << "\nDo you want to add another cookie type? (y/n): ";
+        cin >> choice;
+    } while (choice == 'y' || choice == 'Y');
+
+    // Calculate total revenue for this transaction
+    for (int j = 0; j < transactions[i].itemCount; ++j) {
+        double totalPrice = transactions[i].items[j].quantitySold * transactions[i].items[j].pricePerUnit;
+        transactions[i].totalRevenue += totalPrice;
+    }
+}
