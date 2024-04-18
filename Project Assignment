@@ -152,3 +152,41 @@ void recordSales() {
         transactions[i].totalRevenue += totalPrice;
     }
 }
+
+// Function to calculate total revenue
+double calculateTotalRevenue() {
+	
+    double totalRevenue = 0;
+    for (int i = 0; i < MAX_TRANSACTIONS; ++i) {
+        totalRevenue += transactions[i].totalRevenue;
+    }
+    return totalRevenue;
+}
+
+// Function to display all sales records
+void displaySalesRecords() {
+    cout << "\n === Total Sales Records ===\n" << endl;
+
+    for (int i = 0; i < MAX_TRANSACTIONS; ++i) {
+        if (!transactions[i].transactionNo.empty()) {
+        	cout << "*************" << endl;
+            cout << "Transaction No: " << transactions[i].transactionNo << endl;
+            cout << "\nCustomer Name: " << transactions[i].customerName << endl;
+            
+            // Iterate over items in the transaction
+            for (int j = 0; j < transactions[i].itemCount; ++j) {
+                cout << "Cookie Type: " << transactions[i].items[j].cookieType << endl;
+                cout << "Quantity Sold: " << transactions[i].items[j].quantitySold << endl;
+                cout << "Price Per Unit: RM " << fixed << setprecision(2) << transactions[i].items[j].pricePerUnit << endl;
+                
+                double totalPrice = transactions[i].items[j].quantitySold * transactions[i].items[j].pricePerUnit;
+                cout << "Total Price: RM " << totalPrice << endl;
+                cout << "-----------------------------------" << endl;
+            }
+
+            // Print total revenue for the transaction
+            cout << "Total Revenue: RM " << transactions[i].totalRevenue << endl;
+            cout << "*************\n" << endl;
+        }
+    }
+}
