@@ -368,3 +368,55 @@ int main() {
 
     return 0;
 }
+
+int main() {
+    // Main function to handle user interaction and menu display
+    int choice;
+    string searchName; // Moved declaration outside switch
+    string searchTransactionNo; // Moved declaration outside switch
+
+    do {
+    	cout << "\n" << endl;
+    	cout << setfill('-') << setw(50) << "" << endl;
+    	cout << setfill('*') << setw(50 / 2 + 4) << "HI WELCOME" << setw(50 / 2 - 4) << "" << endl;
+    	cout << setfill('-') << setw(50) << "" << endl;
+        cout << "\n1. Record Sales" << endl;
+        cout << "2. Calculate Total Revenue" << endl;
+        cout << "3. Display Sales Records" << endl;
+        cout << "4. Find Sales by Customer" << endl;
+        cout << "5. Update Sales Record" << endl;
+        cout << "6. Exit" << endl;
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                recordSales();
+                break;
+            case 2:
+                cout << "\nTotal Revenue: RM" << fixed << setprecision(2) << calculateTotalRevenue() << endl;
+                break;
+            case 3:
+                displaySalesRecords();
+                break;
+            case 4:
+                cout << "\nEnter customer name to search: ";
+                cin >> searchName;
+                findSalesByCustomer(searchName);
+                break;
+            case 5:
+                cout << "\nEnter transaction number to update: ";
+                cin >> searchTransactionNo;
+                updateSalesRecord(searchTransactionNo);
+                break;
+            case 6:
+                cout << "Exiting program..." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                break;
+        }
+    } while (choice != 6);
+
+    return 0;
+}
