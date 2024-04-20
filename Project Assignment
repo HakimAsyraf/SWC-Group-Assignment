@@ -190,3 +190,30 @@ void displaySalesRecords() {
         }
     }
 }
+
+// Function to find and display sales records for a specific customer
+void findSalesByCustomer(string searchName) {
+    bool found = false;
+    cout << "\nSales Records for Customer " << searchName << ":" << endl;
+    for (int i = 0; i < MAX_TRANSACTIONS; ++i) {
+        if (!transactions[i].transactionNo.empty() && transactions[i].customerName == searchName) {
+            found = true;
+            cout << "Transaction No: " << transactions[i].transactionNo << endl;
+            cout << "Customer Name: " << transactions[i].customerName << endl;
+            
+            // Iterate over items in the transaction
+            for (int j = 0; j < transactions[i].itemCount; ++j) {
+                cout << "Cookie Type: " << transactions[i].items[j].cookieType << endl;
+                cout << "Quantity Sold: " << transactions[i].items[j].quantitySold << endl;
+                cout << "Price Per Unit: RM " << fixed << setprecision(2) << transactions[i].items[j].pricePerUnit << endl;
+                cout << "Total Price: RM " << fixed << setprecision(2) << transactions[i].items[j].quantitySold * transactions[i].items[j].pricePerUnit << endl;
+                cout << "-----------------------------------\n" << endl;
+            }
+        }
+    }
+    if (!found) {
+    	
+        cout << "\nNo sales records found for customer " << searchName << "." << endl;
+        
+    }
+}
