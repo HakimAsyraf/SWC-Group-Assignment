@@ -61,6 +61,7 @@ void displayCookieTypes() {
     cout << std::setw(42) << std::setfill('=') << "=" << std::endl;
 }
 
+
 // Function to record sales
 void recordSales() {
     // Find the first available index in the transactions array
@@ -169,7 +170,7 @@ void displaySalesRecords() {
 
     for (int i = 0; i < MAX_TRANSACTIONS; ++i) {
         if (!transactions[i].transactionNo.empty()) {
-        	cout << "*************" << endl;
+        	cout << "***********************************" << endl;
             cout << "Transaction No: " << transactions[i].transactionNo << endl;
             cout << "\nCustomer Name: " << transactions[i].customerName << endl;
             
@@ -186,35 +187,8 @@ void displaySalesRecords() {
 
             // Print total revenue for the transaction
             cout << "Total Revenue: RM " << transactions[i].totalRevenue << endl;
-            cout << "*************\n" << endl;
+            cout << "***********************************\n" << endl;
         }
-    }
-}
-
-// Function to find and display sales records for a specific customer
-void findSalesByCustomer(string searchName) {
-    bool found = false;
-    cout << "\nSales Records for Customer " << searchName << ":" << endl;
-    for (int i = 0; i < MAX_TRANSACTIONS; ++i) {
-        if (!transactions[i].transactionNo.empty() && transactions[i].customerName == searchName) {
-            found = true;
-            cout << "Transaction No: " << transactions[i].transactionNo << endl;
-            cout << "Customer Name: " << transactions[i].customerName << endl;
-            
-            // Iterate over items in the transaction
-            for (int j = 0; j < transactions[i].itemCount; ++j) {
-                cout << "Cookie Type: " << transactions[i].items[j].cookieType << endl;
-                cout << "Quantity Sold: " << transactions[i].items[j].quantitySold << endl;
-                cout << "Price Per Unit: RM " << fixed << setprecision(2) << transactions[i].items[j].pricePerUnit << endl;
-                cout << "Total Price: RM " << fixed << setprecision(2) << transactions[i].items[j].quantitySold * transactions[i].items[j].pricePerUnit << endl;
-                cout << "-----------------------------------\n" << endl;
-            }
-        }
-    }
-    if (!found) {
-    	
-        cout << "\nNo sales records found for customer " << searchName << "." << endl;
-        
     }
 }
 
@@ -317,57 +291,6 @@ void updateSalesRecord(string searchTransactionNo) {
     cout << "Transaction No " << searchTransactionNo << " not found." << endl;
 }
 
-int main() {
-    // Main function to handle user interaction and menu display
-    int choice;
-    string searchName; // Moved declaration outside switch
-    string searchTransactionNo; // Moved declaration outside switch
-
-    do {
-    	cout << "\n" << endl;
-    	cout << setfill('-') << setw(50) << "" << endl;
-    	cout << setfill('*') << setw(50 / 2 + 4) << "HI WELCOME" << setw(50 / 2 - 4) << "" << endl;
-    	cout << setfill('-') << setw(50) << "" << endl;
-        cout << "\n1. Record Sales" << endl;
-        cout << "2. Calculate Total Revenue" << endl;
-        cout << "3. Display Sales Records" << endl;
-        cout << "4. Find Sales by Customer" << endl;
-        cout << "5. Update Sales Record" << endl;
-        cout << "6. Exit" << endl;
-        cout << "\nEnter your choice: ";
-        cin >> choice;
-
-        switch (choice) {
-            case 1:
-                recordSales();
-                break;
-            case 2:
-                cout << "\nTotal Revenue: RM" << fixed << setprecision(2) << calculateTotalRevenue() << endl;
-                break;
-            case 3:
-                displaySalesRecords();
-                break;
-            case 4:
-                cout << "\nEnter customer name to search: ";
-                cin >> searchName;
-                findSalesByCustomer(searchName);
-                break;
-            case 5:
-                cout << "\nEnter transaction number to update: ";
-                cin >> searchTransactionNo;
-                updateSalesRecord(searchTransactionNo);
-                break;
-            case 6:
-                cout << "Exiting program..." << endl;
-                break;
-            default:
-                cout << "Invalid choice. Please try again." << endl;
-                break;
-        }
-    } while (choice != 6);
-
-    return 0;
-}
 
 int main() {
     // Main function to handle user interaction and menu display
