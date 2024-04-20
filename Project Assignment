@@ -217,3 +217,154 @@ void findSalesByCustomer(string searchName) {
         
     }
 }
+
+// Function to find and display sales records for a specific customer
+void findSalesByCustomer(string searchName) {
+    bool found = false;
+    cout << "\nSales Records for Customer " << searchName << ":" << endl;
+    for (int i = 0; i < MAX_TRANSACTIONS; ++i) {
+        if (!transactions[i].transactionNo.empty() && transactions[i].customerName == searchName) {
+            found = true;
+            cout << "Transaction No: " << transactions[i].transactionNo << endl;
+            cout << "Customer Name: " << transactions[i].customerName << endl;
+            
+            // Iterate over items in the transaction
+            for (int j = 0; j < transactions[i].itemCount; ++j) {
+                cout << "Cookie Type: " << transactions[i].items[j].cookieType << endl;
+                cout << "Quantity Sold: " << transactions[i].items[j].quantitySold << endl;
+                cout << "Price Per Unit: RM " << fixed << setprecision(2) << transactions[i].items[j].pricePerUnit << endl;
+                cout << "Total Price: RM " << fixed << setprecision(2) << transactions[i].items[j].quantitySold * transactions[i].items[j].pricePerUnit << endl;
+                cout << "-----------------------------------\n" << endl;
+            }
+        }
+    }
+    if (!found) {
+    	
+        cout << "\nNo sales records found for customer " << searchName << "." << endl;
+        
+    }
+}
+
+// Function to update an existing sales record
+void updateSalesRecord(string searchTransactionNo) {
+    // Loop through all transactions to find the one with the matching transaction number
+    for (int i = 0; i < MAX_TRANSACTIONS; ++i) {
+        // Check if the transaction exists and its transaction number matches the search criteria
+        if (!transactions[i].transactionNo.empty() && transactions[i].transactionNo == searchTransactionNo) {
+            // Prompt the user to enter updated details for the transaction
+            cout << "Enter updated details for transaction " << searchTransactionNo << ":" << endl;
+            
+            // Display available cookie types for the user to choose from
+            displayCookieTypes(); 
+
+            // Prompt the user to select a cookie type
+            cout << "Select Cookie Type (Enter number 1-7): ";
+            int choice;
+            cin >> choice;
+
+            // Update the selected cookie type and its price based on user input
+            switch(choice) {
+                case 1:
+                	transactions[i].items[transactions[i].itemCount].cookieType = "Coklat chip";
+                	transactions[i].items[transactions[i].itemCount].pricePerUnit = 6.50;
+                	break;
+            	case 2:
+                	transactions[i].items[transactions[i].itemCount].cookieType = "Walnut";
+                	transactions[i].items[transactions[i].itemCount].pricePerUnit = 8.50;
+                	break;
+            	case 3:
+                	transactions[i].items[transactions[i].itemCount].cookieType = "Almond";
+                	transactions[i].items[transactions[i].itemCount].pricePerUnit = 7.50;
+                	break;
+            	case 4:
+                	transactions[i].items[transactions[i].itemCount].cookieType = "Oat";
+                	transactions[i].items[transactions[i].itemCount].pricePerUnit = 7.50;
+                	break;
+            	case 5:
+  					transactions[i].items[transactions[i].itemCount].cookieType = "White chocolate";
+               	 	transactions[i].items[transactions[i].itemCount].pricePerUnit = 6.50;
+                	break;
+            	case 6:
+                	transactions[i].items[transactions[i].itemCount].cookieType = "Peanut butter";
+               		transactions[i].items[transactions[i].itemCount].pricePerUnit = 8.50;
+                	break;
+           		case 7:
+             		transactions[i].items[transactions[i].itemCount].cookieType = "Nutella";
+            		transactions[i].items[transactions[i].itemCount].pricePerUnit = 8.50;
+            	    break;
+                default:
+                    cout << "Invalid choice. Transaction not updated." << endl;
+                    return;
+            }
+            
+            // Prompt the user to enter the quantity sold for the updated transaction
+            cout << "Quantity Sold: ";
+            cin >> transactions[i].items[transactions[i].itemCount].quantitySold;
+
+            // Prompt the user to enter the customer name for the updated transaction
+            cout << "Customer Name: ";
+            cin >> transactions[i].customerName;
+
+            // Increment the item count for this transaction
+            transactions[i].itemCount++;
+
+            // Exit the function after updating the record
+            return;
+        }
+    }
+
+    // If the loop completes without finding the transaction, print a message indicating it was not found
+    cout << "Transaction No " << searchTransactionNo << " not found." << endl;
+}
+
+int main() {
+    // Main function to handle user interaction and menu display
+    int choice;
+    string searchName; // Moved declaration outside switch
+    string searchTransactionNo; // Moved declaration outside switch
+
+    do {
+    	cout << "\n" << endl;
+    	cout << setfill('-') << setw(50) << "" << endl;
+    	cout << setfill('*') << setw(50 / 2 + 4) << "HI WELCOME" << setw(50 / 2 - 4) << "" << endl;
+    	cout << setfill('-') << setw(50) << "" << endl;
+        cout << "\n1. Record Sales" << endl;
+        cout << "2. Calculate Total Revenue" << endl;
+        cout << "3. Display Sales Records" << endl;
+        cout << "4. Find Sales by Customer" << endl;
+        cout << "5. Update Sales Record" << endl;
+        cout << "6. Exit" << endl;
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                recordSales();
+                break;
+            case 2:
+                cout << "\nTotal Revenue: RM" << fixed << setprecision(2) << calculateTotalRevenue() << endl;
+                break;
+            case 3:
+                displaySalesRecords();
+                break;
+            case 4:
+                cout << "\nEnter customer name to search: ";
+                cin >> searchName;
+                findSalesByCustomer(searchName);
+                break;
+            case 5:
+                cout << "\nEnter transaction number to update: ";
+                cin >> searchTransactionNo;
+                updateSalesRecord(searchTransactionNo);
+                break;
+            case 6:
+                cout << "Exiting program..." << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+                break;
+        }
+    } while (choice != 6);
+
+    return 0;
+}
